@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("country_id");
             $table->integer("price")->nullable();
             $table->integer("categoty_id");
+            $table->string("image")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

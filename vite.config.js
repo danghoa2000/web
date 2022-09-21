@@ -5,8 +5,12 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                //scss
                 'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/sass/admin.scss',
+                //js
+                'resources/js/app.jsx',
+                'resources/js/src/layout/admin/AdminLayout.jsx',
             ],
             refresh: true,
         }),

@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('product_properties', function (Blueprint $table) {
             $table->id();
             $table->integer("product_id");
+            $table->string("keys")->nullable();
             $table->string("value")->nullable();
+            $table->integer("index");
             $table->timestamps();
         });
     }

@@ -1,15 +1,55 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+import React, { lazy, useCallback, useState } from "react";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import AdminLayout from "./src/layout/admin/AdminLayout";
+import HomePage from "./components/HomePage";
+import { createRoot } from "react-dom/client";
+import { AuthContext } from "./hooks/useAuth";
 
-import './bootstrap';
+const LoginContainer = lazy(() => import("./src/page/admin/login/LoginContainer"));
 
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const App = () => {
+    const urlNotExist = useCallback(() => {
+        return <Navigate to="/" replace />;
+    }, []);
 
-import './components/Example';
+    const [auth, setAuth] = useState();
+
+    return (
+        <>
+            {/* Admin route  */}
+            <BrowserRouter>
+                <AuthContext.Provider value={{ auth, setAuth }}>
+                    <Routes>
+                        <Route path="/" element={<Outlet />} >
+                            <Route path="admin" element={<AdminLayout />}>
+                                <Route index element={<div>HOME</div>} />
+                                <Route path="blogs" element={<div>blogs</div>} />
+                                <Route path="contact" element={<div>contact</div>} />
+
+                            </Route>
+                            <Route path="*" element={urlNotExist} />
+                            <Route path="login" element={<LoginContainer />} />
+
+                        </Route>
+
+
+                    </Routes>
+                    {/* <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/product" element={<HomePage />} />
+                    </Routes> */}
+                </AuthContext.Provider>
+
+                {/* <Routes>
+                </Routes> */}
+
+            </BrowserRouter>
+        </>
+    );
+};
+
+export default App;
+
+if (document.getElementById("App")) {
+    createRoot(document.getElementById("App")).render(<App />);
+}

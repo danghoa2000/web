@@ -1,7 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import '../../sass/app.scss'
+import '../../sass/common.scss'
 
-function App() {
+function HomePage() {
     return (
         <div className="container-fluid d-flex p-0">
             <div className="site__bar">
@@ -149,8 +151,4 @@ function App() {
     );
 }
 
-export default App;
-
-if (document.getElementById("App")) {
-    createRoot(document.getElementById("App")).render(<App />);
-}
+export default HomePage;

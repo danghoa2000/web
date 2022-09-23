@@ -21,28 +21,25 @@ const App = () => {
                 <AuthContext.Provider value={{ auth, setAuth }}>
                     <Routes>
                         <Route path="/" element={<Outlet />} >
-                            <Route path="admin" element={<AdminLayout />}>
+                            <Route index element={<Navigate to="/elite" replace />} />
+                            <Route path="/elite" element={<HomePage />} >
                                 <Route index element={<div>HOME</div>} />
                                 <Route path="blogs" element={<div>blogs</div>} />
                                 <Route path="contact" element={<div>contact</div>} />
-
                             </Route>
                             <Route path="*" element={urlNotExist} />
                             <Route path="login" element={<LoginContainer />} />
 
+                            {/* admin route */}
+                            <Route path="admin/*" element={<AdminLayout />}>
+                                <Route index element={<div>HOME</div>} />
+                                <Route path="blogs" element={<div>blogs</div>} />
+                                <Route path="contact" element={<div>contact</div>} />
+                            </Route>
                         </Route>
-
-
                     </Routes>
-                    {/* <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/product" element={<HomePage />} />
-                    </Routes> */}
+
                 </AuthContext.Provider>
-
-                {/* <Routes>
-                </Routes> */}
-
             </BrowserRouter>
         </>
     );

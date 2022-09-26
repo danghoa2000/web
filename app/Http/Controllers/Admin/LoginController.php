@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -32,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = "/admin/home";
 
     /**
      * Create a new controller instance.
@@ -41,14 +39,12 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request)
     {
-        $request->password = Hash::make($request->password);
         $user = User::where("email", $request->email)->first();
-
         if (!$user) {
             return response()->json([
                 'status' => 'fails',
@@ -56,12 +52,13 @@ class LoginController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        if (!Hash::check($user->password, $request->password)) {
+        if (!password_verify($request->password, $user->password)) {
             return response()->json([
                 'status' => 'fails',
                 'message' => 'Unauthorized'
             ], Response::HTTP_UNAUTHORIZED);
         }
+
         Auth::login($user);
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
@@ -79,7 +76,7 @@ class LoginController extends Controller
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString(),
-            "data" => Auth::user()
+            "info" => Auth::user()
         ], Response::HTTP_OK);
     }
 }

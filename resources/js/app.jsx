@@ -1,19 +1,20 @@
-import React, { lazy, useCallback, useState } from "react";
+import React, { lazy, useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import AdminLayout from "./src/layout/admin/AdminLayout";
 import HomePage from "./components/HomePage";
 import { createRoot } from "react-dom/client";
 import { AuthContext } from "./hooks/useAuth";
+import { getAccessToken } from "./utils/sessionHelper";
 
 const LoginContainer = lazy(() => import("./src/page/admin/login/LoginContainer"));
 
 const App = () => {
+    const [auth, setAuth] = useState({});
+
     const urlNotExist = useCallback(() => {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/elite" replace />;
     }, []);
-
-    const [auth, setAuth] = useState();
-
+   
     return (
         <>
             {/* Admin route  */}

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{path?}', function () {
-    return view('home');
+    return view('welcome');
 })->where('path', '.*')->name('react');
 
 Auth::routes();

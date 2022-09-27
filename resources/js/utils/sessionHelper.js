@@ -1,4 +1,7 @@
 export const SESSION_ACCESS_TOKEN = "accessToken";
+export const ADMIN_SESSION_ACCESS_TOKEN = "adminAccessToken";
+
+export const ADMIN_INFO = "adminInfo";
 
 export const getAccessToken = () => {
     return window.sessionStorage.getItem(SESSION_ACCESS_TOKEN) || "";

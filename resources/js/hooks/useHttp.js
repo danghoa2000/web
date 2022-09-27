@@ -1,19 +1,27 @@
 import axios from "axios";
-import { getAccessToken } from "../utils/sessionHelper";
+import { createBrowserHistory } from "history";
+import {
+    ADMIN_SESSION_ACCESS_TOKEN,
+    getAccessToken,
+} from "../utils/sessionHelper";
 
-const axiosClient = axios.create();
-
-axiosClient.defaults.baseURL = "https://example.com/api/v1";
+export const axiosClient = axios.create();
+const history = createBrowserHistory();
 
 axiosClient.defaults.headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
 };
 
-axios.interceptors.request.use(function (config) {
-    const token = getAccessToken();
+axiosClient.interceptors.request.use(function (config) {
+    let token = getAccessToken();
+    const paths = history.location.pathname;
+    const arrayPaths = paths.split("/");
+    if (arrayPaths[1] === "admin") {
+        token = window.localStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
+    }
     if (token) {
-        config.defaults.headers.Authorization = `Bearer ${token}`;
+        config.headers["Authorization"] = `Bearer ${token}`;
     }
 
     return config;

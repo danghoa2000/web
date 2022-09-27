@@ -41,7 +41,7 @@ const Login = (props) => {
                                         <input type="text" className="form-control" id="email"
                                             {...form.register("email", { required: { value: true, message: "this field is required" }, maxLength: MAX_EMAIL_CHARACTERS, minLength: MIN_EMAIL_CHARACTERS })}
                                         />
-                                        <ErrorMessage errors={form.formState.errors} name="email" render={({ message }) => <p>{message}</p>} />
+                                        <ErrorMessage errors={form.formState.errors} name="email" render={({ message }) => <p className='text-danger'>{message}</p>} />
                                     </div>
                                     <div className="form-group last mb-4">
                                         <label htmlFor="password">{"Password"}</label>
@@ -49,7 +49,7 @@ const Login = (props) => {
                                             {...form.register("password", { required: { value: true, message: "this field is required" }, maxLength: MAX_EMAIL_CHARACTERS })}
                                         />
 
-                                        <ErrorMessage errors={form.formState.errors} name="password" />
+                                        <ErrorMessage errors={form.formState.errors} name="password" render={({ message }) => <p className='text-danger'>{message}</p>} />
                                     </div>
                                     <div className="d-flex mb-5 align-items-center justify-content-between">
                                         <label className="control control--checkbox mb-0">

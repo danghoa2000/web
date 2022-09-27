@@ -3,7 +3,8 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { API_BASE_URL, LOGIN_API } from '../../../../constants/api';
 import { useAuth } from '../../../../hooks/useAuth';
-import { getAccessToken, saveAccessToken } from '../../../../utils/sessionHelper';
+import { axiosClient } from '../../../../hooks/useHttp';
+import { ADMIN_SESSION_ACCESS_TOKEN, getAccessToken, saveAccessToken } from '../../../../utils/sessionHelper';
 import Login from './login';
 
 const LoginContainer = () => {
@@ -11,23 +12,21 @@ const LoginContainer = () => {
     const [isLoginFailed, setisLoginFailed] = useState({});
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        const token = getAccessToken();
+        const token = window.localStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
         if (token) {
             navigate("/admin");
         }
     }, [])
 
     const login = async (data) => {
-        await axios.post(API_BASE_URL + LOGIN_API.LOGIN, {
+        await axiosClient.post(API_BASE_URL + LOGIN_API.LOGIN, {
             email: data.email,
             password: data.password,
         },
         ).then(res => {
             setAuth(res.data.info);
-            saveAccessToken(res.data.access_token);
-            setisLoginFailed({});
+            window.localStorage.setItem(ADMIN_SESSION_ACCESS_TOKEN, res.data.access_token);
             navigate("/admin");
         }).catch(err => {
             setisLoginFailed({

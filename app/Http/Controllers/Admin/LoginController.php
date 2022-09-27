@@ -79,4 +79,11 @@ class LoginController extends Controller
             "info" => Auth::user()
         ], Response::HTTP_OK);
     }
+
+    public function logout()
+    {
+        $accessToken = Auth::guard('api')->user()->token();
+        $accessToken->revoke();
+        return true;
+    }
 }

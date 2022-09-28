@@ -18,7 +18,7 @@ axiosClient.interceptors.request.use(function (config) {
     const paths = history.location.pathname;
     const arrayPaths = paths.split("/");
     if (arrayPaths[1] === "admin") {
-        token = window.localStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
+        token = window.sessionStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
     }
     if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;

@@ -4,3 +4,8 @@ export const LOGIN_API = {
     LOGIN: "api/auth/login",
     LOGOUT: "api/auth/logout",
 };
+
+export const CATEGORIES_API = {
+    LIST: "api/auth/admin/categories",
+};
+

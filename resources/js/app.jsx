@@ -14,15 +14,16 @@ const AdminCategoryContainer = lazy(() => import("./src/page/admin/categories/Ca
 
 const App = () => {
     const [auth, setAuth] = useState({});
+    const [user, setUser] = useState({});
     const urlNotExist = useCallback(() => {
         return <Navigate to="/elite" replace />;
     }, []);
-
+    console.log(auth);
     return (
         <>
             {/* Admin route  */}
             <BrowserRouter>
-                <AuthContext.Provider value={{ auth, setAuth }}>
+                <AuthContext.Provider value={{ auth, setAuth, user, setUser }}>
                     <Routes>
                         <Route path="/" element={<Outlet />} >
                             <Route index element={<Navigate to="/elite" replace />} />
@@ -56,7 +57,6 @@ const App = () => {
 
                         </Route>
                     </Routes>
-
                 </AuthContext.Provider>
             </BrowserRouter>
         </>

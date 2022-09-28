@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { API_BASE_URL, LOGIN_API } from '../../../../constants/api';
 import { useAuth } from '../../../../hooks/useAuth';
 import { axiosClient } from '../../../../hooks/useHttp';
-import { ADMIN_SESSION_ACCESS_TOKEN, getAccessToken, saveAccessToken } from '../../../../utils/sessionHelper';
+import { ADMIN_INFO, ADMIN_SESSION_ACCESS_TOKEN, getAccessToken, saveAccessToken } from '../../../../utils/sessionHelper';
 import Login from './login';
 
 const LoginContainer = () => {
@@ -13,7 +13,7 @@ const LoginContainer = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = window.localStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
+        const token = window.sessionStorage.getItem(ADMIN_SESSION_ACCESS_TOKEN);
         if (token) {
             navigate("/admin");
         }
@@ -26,7 +26,8 @@ const LoginContainer = () => {
         },
         ).then(res => {
             setAuth(res.data.info);
-            window.localStorage.setItem(ADMIN_SESSION_ACCESS_TOKEN, res.data.access_token);
+            window.sessionStorage.setItem(ADMIN_SESSION_ACCESS_TOKEN, res.data.access_token);
+            window.sessionStorage.setItem(ADMIN_INFO, JSON.stringify(res.data.info));
             navigate("/admin");
         }).catch(err => {
             setisLoginFailed({

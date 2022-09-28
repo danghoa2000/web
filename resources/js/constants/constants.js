@@ -8,3 +8,25 @@ export const ROLE = {
     EMPLOYEE: 1,
     CUSTOMER: 2,
 };
+
+export const MENU_MAPPING = {
+    0: "",
+    1: "categories",
+    2: "products",
+    3: "orders",
+    4: "manufacturer",
+    5: "banner",
+    6: "blogs",
+    7: "account",
+    8: "customer",
+};
+
+export const SORT = {
+    DESC: "desc",
+    ASC: "asc",
+};
+
+export const CATEGORY_TYPE = {
+    PRODUCT: 0,
+    BLOG: 1,
+};

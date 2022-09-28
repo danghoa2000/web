@@ -2,10 +2,16 @@ import { Avatar, Breadcrumb, Button, Layout, Menu, Typography } from "antd";
 import {
     LaptopOutlined,
     LoginOutlined,
-    NotificationOutlined,
     UserOutlined,
+    AppstoreOutlined,
+    AuditOutlined,
+    ShoppingCartOutlined,
+    UngroupOutlined,
+    PictureOutlined,
+    HeartOutlined,
+    UsergroupAddOutlined,
 } from "@ant-design/icons";
-import React, { Suspense, useCallback, useEffect } from "react";
+import React, { Suspense, useCallback, useEffect, useMemo } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../../../../sass/admin.scss";
 import { ADMIN_SESSION_ACCESS_TOKEN } from "../../../utils/sessionHelper";
@@ -14,6 +20,8 @@ import axios from "axios";
 import { API_BASE_URL, LOGIN_API } from "../../../constants/api";
 import { useAuth } from "../../../hooks/useAuth";
 import { axiosClient } from "../../../hooks/useHttp";
+import { MENU_MAPPING } from "../../../constants/constants";
+import { replace } from "lodash";
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -21,7 +29,7 @@ const AdminLayout = () => {
     const { setAuth } = useAuth();
 
     useEffect(() => {
-        const adminToken = window.localStorage.getItem(
+        const adminToken = window.sessionStorage.getItem(
             ADMIN_SESSION_ACCESS_TOKEN
         );
         if (!adminToken) {
@@ -32,34 +40,43 @@ const AdminLayout = () => {
     const logout = useCallback(async () => {
         await axiosClient.get(API_BASE_URL + LOGIN_API.LOGOUT);
         setAuth({});
-        window.localStorage.clear(ADMIN_SESSION_ACCESS_TOKEN);
+        window.sessionStorage.clear(ADMIN_SESSION_ACCESS_TOKEN);
         navigate("/admin/login");
     }, [])
 
-    const items1 = ["1", "2", "3"].map((key) => ({
-        key,
-        label: `nav ${key}`,
-    }));
+    const redirect = useCallback((item) => navigate(item), []);
 
-    const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-        (icon, index) => {
-            const key = String(index + 1);
+    const MENU = [
+        "Dashboard",
+        "Categories",
+        "Products",
+        "Orders",
+        "Manufacturer",
+        "Banner",
+        "Blogs",
+        "Account",
+        "Customer",
+    ]
 
-            return {
-                key: `sub${key}`,
-                icon: React.createElement(icon),
-                label: `subnav ${key}`,
+    const icons = useMemo(() => [
+        AppstoreOutlined,
+        AuditOutlined,
+        LaptopOutlined,
+        ShoppingCartOutlined,
+        UngroupOutlined,
+        PictureOutlined,
+        HeartOutlined,
+        UserOutlined,
+        UsergroupAddOutlined,
+    ].map((item, index) => {
+        return {
+            key: index,
+            icon: React.createElement(item),
+            label: MENU[index],
+            onClick: () => redirect(MENU_MAPPING[index]),
+        };
+    }), []);
 
-                children: new Array(4).fill(null).map((_, j) => {
-                    const subKey = index * 4 + j + 1;
-                    return {
-                        key: subKey,
-                        label: `option${subKey}`,
-                    };
-                }),
-            };
-        }
-    );
     return (
         <Layout>
             <Header className="header">
@@ -80,10 +97,9 @@ const AdminLayout = () => {
                 <Sider width={200} className="site-layout-background">
                     <Menu
                         mode="inline"
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        // defaultSelectedKeys={['0']}
                         style={{ height: '100%', borderRight: 0 }}
-                        items={items2}
+                        items={icons}
                     />
                 </Sider>
                 <Layout style={{ padding: '0 24px 24px', minHeight: "calc(100vh - 64px)" }}>

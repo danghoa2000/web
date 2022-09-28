@@ -22,8 +22,9 @@ Route::group([
     Route::get('logout', [LoginController::class, 'logout']);
 
     Route::group([
-        'middleware' => 'auth:api'
+        'middleware' => 'auth:api', 'prefix' => 'admin'
     ], function () {
         Route::get('home', [HomeController::class, 'index']);
+        Route::get('categories', [HomeController::class, 'index']);
     });
 });

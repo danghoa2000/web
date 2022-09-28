@@ -1,11 +1,22 @@
+import { Breadcrumb, Select, Table } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
 import React from 'react';
+import Selection from '../../../../components/partial/Selection';
 
-const Category = () => {
+const Category = (props) => {
+    const {
+        columns,
+        data,
+        onChange,
+        currentPage,
+        pageSize,
+        setPageSize,
+    } = props;
     return (
         <>
             <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>Category</Breadcrumb.Item>
+                <Breadcrumb.Item>{"Home"}</Breadcrumb.Item>
+                <Breadcrumb.Item>{"Categories"}</Breadcrumb.Item>
             </Breadcrumb>
             <Content
                 className="site-layout-background"
@@ -15,7 +26,23 @@ const Category = () => {
                     minHeight: 280,
                 }}
             >
-                Home
+                <div className="w-max flex align-items-center mb-3">
+                    <div className='flex align-items-center'>
+                        <span className="ml-6 pr-10 ant-form-item-label">
+                            <span className="text-danger font-bold">{data.length} </span>
+                            {"Record"}
+                        </span>
+                        <div className="w-max flex items-center">
+                            <Selection setPageSize={setPageSize}/>
+                        </div>
+                    </div>
+
+                </div>
+                <Table
+                    columns={columns}
+                    dataSource={data}
+                    onChange={onChange}
+                    pagination={{ pageSize: pageSize, total: data.length, current: currentPage }} />
             </Content>
         </>
 

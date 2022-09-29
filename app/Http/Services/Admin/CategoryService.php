@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Admin;
+namespace App\Http\Services\Admin;
 
 use App\Models\Category;
 
@@ -11,10 +11,10 @@ class CategoryService
     {
         // 0 - thư mục sản phẩm, 1 - thư mục bài đăng.
         return Category::with('subCategories')
-            ->where('type', $type)
-            ->limit($request->pageSize)
+            ->where('type', $request->type)
             ->offset(($request->currentPage - 1) * $request->pageSize)
-            ->sortByDesc("updated_at")
+            ->limit($request->pageSize)
+            ->orderBy("updated_at", "desc")
             ->get();
     }
 }

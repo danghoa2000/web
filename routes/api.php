@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,6 @@ Route::group([
         'middleware' => 'auth:api', 'prefix' => 'admin'
     ], function () {
         Route::get('home', [HomeController::class, 'index']);
-        Route::get('categories', [HomeController::class, 'index']);
+        Route::get('categories', [CategoriesController::class, 'index']);
     });
 });

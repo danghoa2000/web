@@ -27,7 +27,7 @@ return new class extends Migration
             // 0 - thư mục sản phẩm, 1 - thư mục bài đăng.
             $table->integer('created_by')->default(0);
             $table->timestamps();
-            $table->sortdelete();
+            $table->softDeletes();
         });
     }
 

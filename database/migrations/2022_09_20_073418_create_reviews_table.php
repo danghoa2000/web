@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('email',200)->nullable(); // for review blog with dont login
             // 0 - đánh giá sản phẩm, 1 - bình luận tin tức
             $table->timestamps();
-            $table->softDelete();
+            $table->softDeletes();
         });
     }
 

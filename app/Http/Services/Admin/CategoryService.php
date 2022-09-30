@@ -9,12 +9,12 @@ class CategoryService
 
     public function get($request)
     {
-        // 0 - thư mục sản phẩm, 1 - thư mục bài đăng.
-        return Category::with('subCategories')
-            ->where('type', $request->type)
-            ->offset(($request->currentPage - 1) * $request->pageSize)
+        $categories =  Category::select('id', 'name')
+            ->where('type', $request->type) // 0 - thư mục sản phẩm, 1 - thư mục bài đăng.
             ->limit($request->pageSize)
-            ->orderBy("updated_at", "desc")
+            ->offset(($request->currentPage - 1) * $request->pageSize)
+            ->filter($request)
             ->get();
+        return $categories;
     }
 }

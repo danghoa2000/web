@@ -8,9 +8,15 @@ import { ROLE } from "./constants/constants";
 import PrivateAdminRoute from "./PrivateAdminRoute"
 import { createBrowserHistory } from "history";
 
+// admin
 const AdminLoginContainer = lazy(() => import("./src/page/admin/login/LoginContainer"));
 const AdminHomeContainer = lazy(() => import("./src/page/admin/Home/HomeContainer"));
 const AdminCategoryContainer = lazy(() => import("./src/page/admin/categories/CategoryContainer"));
+const AdminCategoryCreateContainer = lazy(() => import("./src/page/admin/categories/create/CategoryCreateContainer"));
+const AdminCategoryUpdateContainer = lazy(() => import("./src/page/admin/categories/Update/CategoryUpdateContainer"));
+
+// ====
+
 
 const App = () => {
     const [auth, setAuth] = useState({});
@@ -45,12 +51,29 @@ const App = () => {
                                     }
                                 />
                                 <Route path="categories"
-                                    element={
-                                        <PrivateAdminRoute roles={[ROLE.MANAGER]}>
+                                    element={<Outlet />}
+                                >
+                                    <Route index element={
+                                        <PrivateAdminRoute roles={[ROLE.MANAGER, ROLE.EMPLOYEE]}>
                                             <AdminCategoryContainer />
                                         </PrivateAdminRoute>
-                                    }
-                                />
+                                    } />
+
+                                    <Route path="create"
+                                        element={
+                                            <PrivateAdminRoute roles={[ROLE.MANAGER, ROLE.EMPLOYEE]}>
+                                                <AdminCategoryCreateContainer />
+                                            </PrivateAdminRoute>
+                                        }
+                                    />
+                                    <Route path="update"
+                                        element={
+                                            <PrivateAdminRoute roles={[ROLE.MANAGER, ROLE.EMPLOYEE]}>
+                                                <AdminCategoryUpdateContainer />
+                                            </PrivateAdminRoute>
+                                        }
+                                    />
+                                </Route>
                                 <Route path="contact" element={<div>contact</div>} />
                             </Route>
                             <Route path="admin/login" element={<AdminLoginContainer />} />

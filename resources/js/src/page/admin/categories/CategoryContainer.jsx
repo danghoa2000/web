@@ -1,7 +1,9 @@
 import { Modal } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL, CATEGORIES_API, LOGIN_API } from '../../../../constants/api';
 import { CATEGORY_TYPE, SORT } from '../../../../constants/constants';
+import { URL_MAPPING } from '../../../../constants/url';
 import { axiosClient } from '../../../../hooks/useHttp';
 import Category from './Category';
 
@@ -13,26 +15,13 @@ const CategoryContainer = () => {
     const [currentSort, setCurrentSort] = useState("");
     const [currentDirection, setCurrentDirection] = useState("");
     const [searchField, setSearchField] = useState({});
+    const navigate = useNavigate();
 
     //define header table
     const columns = [
         {
             title: 'Name',
             dataIndex: 'name',
-        },
-        {
-            title: 'Chinese Score',
-            dataIndex: 'chinese',
-            sorter: true,
-        },
-        {
-            title: 'Math Score',
-            dataIndex: 'math',
-            sorter: true,
-        },
-        {
-            title: 'English Score',
-            dataIndex: 'english',
             sorter: true,
         },
     ];
@@ -46,8 +35,11 @@ const CategoryContainer = () => {
             currentSort: currentSort,
             currentDirection: currentDirection,
             type: CATEGORY_TYPE.PRODUCT,
-        }
-        await axiosClient.get(API_BASE_URL + CATEGORIES_API.LIST, paramater)
+        };
+
+        await axiosClient.get(API_BASE_URL + CATEGORIES_API.LIST, {
+            params: { ...paramater }
+        })
             .then((res) => {
                 setData(res.data);
             }).catch(() => {
@@ -63,6 +55,10 @@ const CategoryContainer = () => {
         setCurrentDirection(sorter.order ? (sorter.order === "descend" ? SORT.DESC : SORT.ASC) : "");
     };
 
+    const redirectCreate = () => {
+        navigate("create", { replace: true });
+    }
+
     useEffect(() => {
         getCategories()
     }, [pageSize, currentPage, currentSort, currentDirection]);
@@ -77,6 +73,7 @@ const CategoryContainer = () => {
             currentDirection={currentDirection}
             pageSize={pageSize}
             setPageSize={setPageSize}
+            redirectCreate={redirectCreate}
         />
     );
 };

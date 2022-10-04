@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <>
       <header className='header'>
-        <div className='container d-flex'>
+        <div className='container d-flex justify-content-between'>
           <div className='catgrories d-flex'>
             <span class='fa-solid fa-border-all'></span>
             <h4>
@@ -19,28 +19,28 @@ const Navbar = () => {
             <ul className={MobileMenu ? "nav-links-MobileMenu" : "link f_flex capitalize"} onClick={() => setMobileMenu(false)}>
               {/*<ul className='link f_flex uppercase {MobileMenu ? "nav-links-MobileMenu" : "nav-links"} onClick={() => setMobileMenu(false)}'>*/}
               <li>
-                <Link to='/'>home</Link>
+                <Link to='/elite'>home</Link>
               </li>
               <li>
-                <Link to='/pages'>pages</Link>
+                <Link to='/elite/pages'>pages</Link>
               </li>
               <li>
-                <Link to='/user'>user account</Link>
+                <Link to='/elite/user'>user account</Link>
               </li>
               <li>
-                <Link to='/vendor'>vendor account</Link>
+                <Link to='/elite/vendor'>vendor account</Link>
               </li>
               <li>
-                <Link to='/track'>track my order</Link>
+                <Link to='/elite/track'>track my order</Link>
               </li>
               <li>
-                <Link to='/contact'>contact</Link>
+                <Link to='/elite/contact'>contact</Link>
               </li>
             </ul>
 
-            <button className='toggle' onClick={() => setMobileMenu(!MobileMenu)}>
+            {/* <button className='toggle' onClick={() => setMobileMenu(!MobileMenu)}>
               {MobileMenu ? <i className='fas fa-times close home-btn'></i> : <i className='fas fa-bars open'></i>}
-            </button>
+            </button> */}
           </div>
         </div>
       </header>

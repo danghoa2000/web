@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import AdminLayout from "./src/layout/admin/AdminLayout";
 import DefaultLayout from "./src/layout/DefaultLayout";
@@ -7,7 +7,6 @@ import { createRoot } from "react-dom/client";
 import { AuthContext } from "./hooks/useAuth";
 import { ROLE } from "./constants/constants";
 import PrivateAdminRoute from "./PrivateAdminRoute"
-import HomePage from "./src/page/client/HomePage";
 
 import Data from "./components/client/Data"
 import Sdata from "./components/client/shops/Sdata"
@@ -21,6 +20,9 @@ const AdminCategoryUpdateContainer = lazy(() => import("./src/page/admin/categor
 
 // ====
 
+const HomePageContainer = lazy(() => import("./src/page/client/HomePageContainer"));
+const CartContainer = lazy(() => import("./components/partial/Cart/Cart"));
+const DetailContainer = lazy(() => import("./src/page/client/Detail/DetailContainer"));
 
 const App = () => {
     const [auth, setAuth] = useState({});
@@ -81,8 +83,23 @@ const App = () => {
                         <Route path="/" element={<Outlet />} >
                             <Route index element={<Navigate to="/elite" />} />
                             <Route path="/elite" element={<DefaultLayout CartItem={CartItem} />} >
-                                <Route index element={<HomePage productItems={productItems} addToCart={addToCart} shopItems={shopItems} />} />
-                                <Route path="blogs" element={<div>blogs</div>} />
+                                <Route index element={
+                                    <Suspense fallback={<div> Loadding 99%... </div>}>
+                                        <HomePageContainer productItems={productItems} addToCart={addToCart} shopItems={shopItems} />
+                                    </Suspense>}
+                                />
+
+                                <Route path='cart' element={
+                                    <Suspense fallback={<div> Loadding 99%... </div>}>
+                                        <CartContainer CartItem={CartItem} addToCart={addToCart} decreaseQty={decreaseQty} />
+                                    </Suspense>}
+                                />
+
+                                <Route path='product' element={
+                                    <Suspense fallback={<div> Loadding 99%... </div>}>
+                                        <DetailContainer />
+                                    </Suspense>}
+                                />
                                 <Route path="contact" element={<div>contact</div>} />
                             </Route>
                             <Route path="*" element={urlNotExist} />

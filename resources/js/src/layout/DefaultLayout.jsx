@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from "../../components/partial/header/Head"
+import Header from "../../components/partial/header/Header"
 import Footer from "../../components/partial/footer/Footer"
 
 import "../../../sass/app.scss";

@@ -6,10 +6,16 @@
 }
 .head i {
   margin-right: 10px;
+  width: auto;
 }
 .head label {
   margin-right: 30px;
   font-size: 13px;
+  width: auto;
+}
+
+.head span {
+  width: auto;
 }
 /*------head-----------*/
 /*------search-----------*/

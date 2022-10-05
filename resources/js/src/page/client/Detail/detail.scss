@@ -48,3 +48,22 @@ button.btn-add-product {
 .product__qty {
     width: 50px;
 }
+
+.homeSlide {
+    ul.custom-dot {
+        display: flex !important;
+        justify-content: center;
+        padding: 0;
+        width: 100%;
+        li {
+            height: 70px;
+            width: 70px;
+            border-radius: 0;
+            margin: 5px;
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}

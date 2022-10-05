@@ -2,6 +2,8 @@ import React from "react"
 import Categories from "./Categories"
 import "./Home.css"
 import SliderHome from "./Slider"
+import Sdata from "./Sdata"
+import SlideCard from "./SlideCard"
 
 const Home = () => {
   return (
@@ -9,7 +11,15 @@ const Home = () => {
       <section className='home'>
         <div className='container d-flex'>
           <Categories />
-          <SliderHome />
+          <SlideCard
+            slideClass={"homeSlide contentWidth"}
+            dots={true}
+            slidesToShow={1}
+            slidesToScroll={1}
+            autoplay={true}
+            data={Sdata}
+            dotsClass={"slick-dots slick-thumb"}
+          />
         </div>
       </section>
     </>

@@ -1,11 +1,11 @@
-import React from "react"
-import Sdata from "./Sdata"
-import Slider from "react-slick"
+import React from 'react';
+import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import { BASE_URL } from "../../../constants/constants"
+import { BASE_URL } from '../../../../constants/constants';
+import { auto } from '@popperjs/core';
 
-const SlideCard = (props) => {
+const SliderProduct = (props) => {
     const {
         dots,
         slidesToShow,
@@ -14,6 +14,7 @@ const SlideCard = (props) => {
         appendDots,
         dotsClass,
         customPaging,
+        data,
         slideClass
     } = props;
 
@@ -22,7 +23,7 @@ const SlideCard = (props) => {
         infinite: true,
         slidesToShow: slidesToShow,
         slidesToScroll: slidesToScroll,
-        autoplay: autoplay,
+        autoplay: false,
         dotsClass: dotsClass
     }
 
@@ -41,18 +42,11 @@ const SlideCard = (props) => {
         <>
             <section className={slideClass}>
                 <Slider {...settings}>
-                    {Sdata.map((value, index) => {
+                    {data.map((value, index) => {
                         return (
                             <>
-                                <div className='box d-flex top' key={index}>
-                                    <div className='left'>
-                                        <h1>{value.title}</h1>
-                                        <p>{value.desc}</p>
-                                        <button className='btn-primary'>Visit Collections</button>
-                                    </div>
-                                    <div className='right'>
-                                        <img src={BASE_URL + value.cover} alt='' />
-                                    </div>
+                                <div className='d-flex justify-content-center' style={{ height: 300, paddingBottom: 100, margin: auto}} key={index}>
+                                    <img src={BASE_URL + value.cover} alt=''/>
                                 </div>
                             </>
                         )
@@ -61,6 +55,6 @@ const SlideCard = (props) => {
             </section>
         </>
     )
-}
+};
 
-export default SlideCard
+export default SliderProduct;

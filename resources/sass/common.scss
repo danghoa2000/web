@@ -171,7 +171,7 @@ button {
     }
     .rate {
         i {
-            font-size: 15px;
+            font-size: 16px;
             color: #ffcd4e;
             margin: 5px 5px 5px 0;
         }
@@ -278,4 +278,17 @@ button {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
+}
+
+.tab__header {
+    text-transform: none !important;
+    font-weight: bold !important;
+}
+
+img {
+    max-width: 100%;
+}
+
+.product .img {
+    margin-bottom: 30px;
 }

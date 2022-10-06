@@ -48,7 +48,7 @@
   padding: 10px;
 }
 ::placeholder {
-  font-size: 15px;
+  font-size: 16px;
 }
 .search-box span {
   width: 20%;
@@ -106,7 +106,7 @@ header ul li {
 }
 header ul li a {
   transition: 0.5s;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
 }
 header ul li a:hover {

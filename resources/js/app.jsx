@@ -23,6 +23,7 @@ const AdminCategoryUpdateContainer = lazy(() => import("./src/page/admin/categor
 const HomePageContainer = lazy(() => import("./src/page/client/HomePageContainer"));
 const CartContainer = lazy(() => import("./components/partial/Cart/Cart"));
 const DetailContainer = lazy(() => import("./src/page/client/Detail/DetailContainer"));
+const ProductContainer = lazy(() => import("./src/page/client/Product/ProductContainer"));
 
 const App = () => {
     const [auth, setAuth] = useState({});
@@ -100,7 +101,11 @@ const App = () => {
                                         <DetailContainer />
                                     </Suspense>}
                                 />
-                                <Route path="contact" element={<div>contact</div>} />
+                                <Route path="search" element={
+                                    <Suspense fallback={<div> Loadding 99%... </div>}>
+                                        <ProductContainer />
+                                    </Suspense>
+                                } />
                             </Route>
                             <Route path="*" element={urlNotExist} />
 
